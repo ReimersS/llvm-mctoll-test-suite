@@ -1,0 +1,18 @@
+// REQUIRES: system-linux
+// RUN: clang -o %t %S/linear_regression-seq.c -O3 -mno-sse
+// RUN: llvm-mctoll -d --include-files=/usr/include/assert.h,/usr/include/ctype.h,/usr/include/fcntl.h,/usr/include/stddef.h,/usr/include/stdio.h,/usr/include/stdlib.h,/usr/include/string.h,/usr/include/strings.h,/usr/include/sys/mman.h,/usr/include/sys/stat.h,/usr/include/unistd.h %t
+// RUN: clang -O3 -o %t-dis %t-dis.ll
+// RUN: %t-dis inputs/key_file_50MB.txt 2>&1 | FileCheck %s
+
+// CHECK: Linear Regression Serial: Running...
+// CHECK: Linear Regression Serial Results:
+// CHECK: 	a    = 0.000000
+// CHECK: 	b    = 0.000000
+// CHECK: 	xbar = 0.000000
+// CHECK: 	ybar = 0.000000
+// CHECK: 	r2   = 0.000000
+// CHECK: 	SX   = 2542118516
+// CHECK: 	SY   = 2542537844
+// CHECK: 	SXX  = 267141279222
+// CHECK: 	SYY  = 267223889752
+// CHECK: 	SXY  = 241128163411
