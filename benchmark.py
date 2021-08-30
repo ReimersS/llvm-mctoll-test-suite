@@ -7,7 +7,6 @@ import subprocess
 import sys
 
 compilation_flags = ["-O3", "-mno-sse"]
-iterations = 10
 include_files = "/usr/include/assert.h,/usr/include/fcntl.h,/usr/include/inttypes.h," \
                 "/home/martin/llvm-project/build/lib/clang/14.0.0/include/stddef.h,/usr/include/stdio.h," \
                 "/usr/include/stdlib.h,/usr/include/string.h,/usr/include/x86_64-linux-gnu/sys/mman.h," \
@@ -24,12 +23,13 @@ def run_command(args):
         exit(1)
 
 
-if len(sys.argv) <= 1:
-    print("Usage: {} file [arguments]".format(sys.argv[0]), file=sys.stderr)
+if len(sys.argv) <= 2:
+    print("Usage: {} file iterations [arguments]".format(sys.argv[0]), file=sys.stderr)
     sys.exit(1)
 
 input_file = sys.argv[1]
-additional_args = sys.argv[2:]
+iterations = int(sys.argv[2])
+additional_args = sys.argv[3:]
 
 filename_without_ext = re.sub(r"(.c)$", "", input_file)
 raised_bitcode = filename_without_ext + "-dis.ll"
@@ -56,14 +56,14 @@ for i in range(iterations):
     run_command([filename_without_ext, *additional_args])
     end = datetime.datetime.now()
     diff = end - begin
-    orig_times.append(diff.microseconds)
+    orig_times.append(diff.total_seconds() * 10**6)
 
     print(".", end="", file=sys.stderr, flush=True)
     begin = datetime.datetime.now()
     run_command([raised_recompiled, *additional_args])
     end = datetime.datetime.now()
     diff = end - begin
-    recompiled_times.append(diff.microseconds)
+    recompiled_times.append(diff.total_seconds() * 10**6)
 
 print("", file=sys.stderr, flush=True)
 
