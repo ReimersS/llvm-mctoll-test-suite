@@ -58,6 +58,7 @@ for i in range(iterations):
     diff = end - begin
     orig_times.append(diff.microseconds)
 
+    print(".", end="", file=sys.stderr, flush=True)
     begin = datetime.datetime.now()
     run_command([raised_recompiled, *additional_args])
     end = datetime.datetime.now()
@@ -66,8 +67,9 @@ for i in range(iterations):
 
 print("", file=sys.stderr, flush=True)
 
-print("command,min,max,mean,median,stddev")
+print("command,iterations,min,max,mean,median,stddev")
 print(filename_without_ext, *additional_args, sep=" ", end=",")
+print(iterations, end=",")
 print(min(orig_times), end=",")
 print(max(orig_times), end=",")
 print(statistics.mean(orig_times), end=",")
@@ -75,6 +77,7 @@ print(statistics.median(orig_times), end=",")
 print(statistics.stdev(orig_times), end="\n")
 
 print(raised_recompiled, *additional_args, sep=" ", end=",")
+print(iterations, end=",")
 print(min(recompiled_times), end=",")
 print(max(recompiled_times), end=",")
 print(statistics.mean(recompiled_times), end=",")
