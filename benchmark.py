@@ -36,19 +36,22 @@ raised_bitcode = filename_without_ext + "-dis.ll"
 raised_recompiled = filename_without_ext + "-dis"
 
 # compiling benchmark
+print("Compiling...", file=sys.stderr)
 run_command(["clang", *compilation_flags, input_file, "-o", filename_without_ext])
 
 # raising benchmark
 run_command(["llvm-mctoll", "--compilation-db-path=.", "--include-files=" + include_files, "-d", filename_without_ext, "-o", raised_bitcode])
+print("Raising...", file=sys.stderr)
 
 # re-compiling benchmark
 run_command(["clang", *compilation_flags, raised_bitcode, "-o", raised_recompiled])
+print("Re-compiling...", file=sys.stderr)
 
 orig_times = []
 recompiled_times = []
 
 for i in range(iterations):
-    print(".", end="", file=sys.stderr)
+    print(".", end="", file=sys.stderr, flush=True)
     begin = datetime.datetime.now()
     run_command([filename_without_ext, *additional_args])
     end = datetime.datetime.now()
@@ -61,7 +64,7 @@ for i in range(iterations):
     diff = end - begin
     recompiled_times.append(diff.microseconds)
 
-print("", file=sys.stderr)
+print("", file=sys.stderr, flush=True)
 
 print("command,min,max,mean,median,stddev")
 print(filename_without_ext, *additional_args, sep=" ", end=",")
