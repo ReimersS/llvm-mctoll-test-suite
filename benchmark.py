@@ -12,7 +12,7 @@ include_files = "/usr/include/assert.h,/usr/include/fcntl.h,/usr/include/inttype
                 "/home/martin/llvm-project/build/lib/clang/14.0.0/include/stddef.h,/usr/include/stdio.h," \
                 "/usr/include/stdlib.h,/usr/include/string.h,/usr/include/x86_64-linux-gnu/sys/mman.h," \
                 "/usr/include/x86_64-linux-gnu/sys/stat.h,/usr/include/x86_64-linux-gnu/sys/time.h," \
-                "/usr/include/time.h,/usr/include/unistd.h "
+                "/usr/include/time.h,/usr/include/unistd.h"
 
 
 def run_command(args):
