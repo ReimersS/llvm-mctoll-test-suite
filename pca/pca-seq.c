@@ -25,16 +25,10 @@
 */
 
 #include <stdio.h>
-#include <strings.h>
-#include <string.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <assert.h>
-#include <string.h>
-#include <math.h>
 
-#define DEF_GRID_SIZE 100  // all values in the matrix are from 0 to this value 
+#define DEF_GRID_SIZE 100  // all values in the matrix are from 0 to this value
 #define DEF_NUM_ROWS 10
 #define DEF_NUM_COLS 10
 

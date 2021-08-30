@@ -25,11 +25,8 @@
 */
 
 #include <stdio.h>
-#include <assert.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
-#include <time.h>
 #include <unistd.h>
 
 #define DEF_NUM_POINTS 100000

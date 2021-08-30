@@ -25,14 +25,12 @@
  */
 
 #include <assert.h>
-#include <ctype.h>
 #include <fcntl.h>
 #include <inttypes.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/time.h>
