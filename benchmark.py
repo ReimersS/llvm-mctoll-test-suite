@@ -16,16 +16,16 @@ include_files = "/usr/include/assert.h,/usr/include/fcntl.h,/usr/include/inttype
 
 
 def run_command(args):
-    result = subprocess.run(args)
+    result = subprocess.run(args, capture_output=True)
     if result.returncode != 0:
-        print("Error running ", args)
-        print("stdout: ", result.stdout)
-        print("stderr: ", result.stderr)
+        print("Error running ", args, file=sys.stderr)
+        print("stdout: ", result.stdout, file=sys.stderr)
+        print("stderr: ", result.stderr, file=sys.stderr)
         exit(1)
 
 
 if len(sys.argv) <= 1:
-    print("Usage: {} file [arguments]".format(sys.argv[0]))
+    print("Usage: {} file [arguments]".format(sys.argv[0]), file=sys.stderr)
     sys.exit(1)
 
 input_file = sys.argv[1]
@@ -48,6 +48,7 @@ orig_times = []
 recompiled_times = []
 
 for i in range(iterations):
+    print(".", end="", file=sys.stderr)
     begin = datetime.datetime.now()
     run_command([filename_without_ext, *additional_args])
     end = datetime.datetime.now()
@@ -59,6 +60,8 @@ for i in range(iterations):
     end = datetime.datetime.now()
     diff = end - begin
     recompiled_times.append(diff.microseconds)
+
+print("", file=sys.stderr)
 
 print("command,min,max,mean,median,stddev")
 print(filename_without_ext, *additional_args, sep=" ", end=",")
