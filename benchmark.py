@@ -63,23 +63,23 @@ for i in range(iterations):
     run_command([raised_recompiled, *additional_args])
     end = datetime.datetime.now()
     diff = end - begin
-    recompiled_times.append(diff.total_seconds() * 10**6)
+    recompiled_times.append(diff.total_seconds() * 10 ** 6)
 
 print("", file=sys.stderr, flush=True)
 
-print("command,iterations,min,max,mean,median,stddev")
+print("benchmark,iterations,min (orig),min (raised),max (orig),max (raised),mean (orig),mean (raised),overhead (mean),"
+      "median (orig),median (raised),overhead (median),stddev (orig),stddev (raised)")
 print(filename_without_ext, *additional_args, sep=" ", end=",")
 print(iterations, end=",")
 print(min(orig_times), end=",")
-print(max(orig_times), end=",")
-print(statistics.mean(orig_times), end=",")
-print(statistics.median(orig_times), end=",")
-print(statistics.stdev(orig_times), end="\n")
-
-print(raised_recompiled, *additional_args, sep=" ", end=",")
-print(iterations, end=",")
 print(min(recompiled_times), end=",")
+print(max(orig_times), end=",")
 print(max(recompiled_times), end=",")
+print(statistics.mean(orig_times), end=",")
 print(statistics.mean(recompiled_times), end=",")
+print(statistics.mean(recompiled_times) / statistics.mean(orig_times), end=",")
+print(statistics.median(orig_times), end=",")
 print(statistics.median(recompiled_times), end=",")
+print(statistics.median(recompiled_times) / statistics.median(orig_times), end=",")
+print(statistics.stdev(orig_times), end=",")
 print(statistics.stdev(recompiled_times), end="\n")
