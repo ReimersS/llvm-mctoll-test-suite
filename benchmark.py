@@ -12,7 +12,7 @@ include_files = "/usr/include/assert.h,/usr/include/fcntl.h,/usr/include/inttype
                 "/home/martin/llvm-project/build/lib/clang/14.0.0/include/stddef.h,/usr/include/stdio.h," \
                 "/usr/include/stdlib.h,/usr/include/string.h,/usr/include/x86_64-linux-gnu/sys/mman.h," \
                 "/usr/include/x86_64-linux-gnu/sys/stat.h,/usr/include/x86_64-linux-gnu/sys/time.h," \
-                "/usr/include/time.h,/usr/include/unistd.h"
+                "/usr/include/time.h,/usr/include/unistd.h,/usr/include/getopt.h,./getopt.h"
 
 
 def run_command(args):
@@ -39,7 +39,7 @@ raised_recompiled = filename_without_ext + "-dis"
 run_command(["clang", *compilation_flags, input_file, "-o", filename_without_ext])
 
 # raising benchmark
-run_command(["llvm-mctoll", "--include-files=" + include_files, "-d", filename_without_ext, "-o", raised_bitcode])
+run_command(["llvm-mctoll", "--compilation-db-path=.", "--include-files=" + include_files, "-d", filename_without_ext, "-o", raised_bitcode])
 
 # re-compiling benchmark
 run_command(["clang", *compilation_flags, raised_bitcode, "-o", raised_recompiled])
@@ -68,7 +68,6 @@ print(statistics.mean(orig_times), end=",")
 print(statistics.median(orig_times), end=",")
 print(statistics.stdev(orig_times), end="\n")
 
-print("command,min,max,mean,median,stddev")
 print(raised_recompiled, *additional_args, sep=" ", end=",")
 print(min(recompiled_times), end=",")
 print(max(recompiled_times), end=",")
