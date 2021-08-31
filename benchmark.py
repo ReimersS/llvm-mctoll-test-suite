@@ -6,7 +6,7 @@ import statistics
 import subprocess
 import sys
 
-compilation_flags = ["-O3", "-mno-sse"]
+# compilation_flags = ["-O3", "-mno-sse"]
 include_files = "/usr/include/assert.h,/usr/include/fcntl.h,/usr/include/inttypes.h," \
                 "/home/martin/llvm-project/build/lib/clang/14.0.0/include/stddef.h,/usr/include/stdio.h," \
                 "/usr/include/stdlib.h,/usr/include/string.h,/usr/include/x86_64-linux-gnu/sys/mman.h," \
@@ -23,13 +23,14 @@ def run_command(args):
         exit(1)
 
 
-if len(sys.argv) <= 2:
-    print("Usage: {} file iterations [arguments]".format(sys.argv[0]), file=sys.stderr)
+if len(sys.argv) <= 3:
+    print("Usage: {} file \"compile_flags\" iterations [arguments]".format(sys.argv[0]), file=sys.stderr)
     sys.exit(1)
 
 input_file = sys.argv[1]
-iterations = int(sys.argv[2])
-additional_args = sys.argv[3:]
+compilation_flags = sys.argv[2].split()
+iterations = int(sys.argv[3])
+additional_args = sys.argv[4:]
 
 filename_without_ext = re.sub(r"(.c)$", "", input_file)
 raised_bitcode = filename_without_ext + "-dis.ll"
