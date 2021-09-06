@@ -6,13 +6,25 @@ import statistics
 import subprocess
 import sys
 
-# compilation_flags = ["-O3", "-mno-sse"]
-include_files = "/usr/include/assert.h,/usr/include/fcntl.h,/usr/include/inttypes.h," \
-                "/home/martin/llvm-project/build/lib/clang/14.0.0/include/stddef.h,/usr/include/stdio.h," \
-                "/usr/include/stdlib.h,/usr/include/string.h,/usr/include/x86_64-linux-gnu/sys/mman.h," \
-                "/usr/include/x86_64-linux-gnu/sys/stat.h,/usr/include/x86_64-linux-gnu/sys/time.h," \
-                "/usr/include/time.h,/usr/include/unistd.h,/usr/include/getopt.h,./getopt.h"
-
+include_files = "/usr/include/assert.h" \
+                "/usr/include/crypt.h" \
+                "/usr/include/ctype.h" \
+                "/usr/include/fcntl.h" \
+                "/usr/include/getopt.h," \
+                "/usr/include/inttypes.h" \
+                "/usr/include/math.h" \
+                "/usr/include/pthread.h" \
+                "/usr/include/stdio.h" \
+                "/usr/include/stdlib.h" \
+                "/usr/include/string.h" \
+                "/usr/include/strings.h" \
+                "/usr/include/time.h" \
+                "/usr/include/unistd.h" \
+                "/usr/include/x86_64-linux-gnu/sys/mman.h," \
+                "/usr/include/x86_64-linux-gnu/sys/stat.h," \
+                "/usr/include/x86_64-linux-gnu/sys/time.h," \
+                "/home/martin/llvm-project/build/lib/clang/14.0.0/include/stddef.h," \
+                "./getopt.h"
 
 def run_command(args):
     result = subprocess.run(args, capture_output=True)
@@ -68,10 +80,11 @@ for i in range(iterations):
 
 print("", file=sys.stderr, flush=True)
 
-print("benchmark,iterations,min (orig),min (raised),max (orig),max (raised),mean (orig),mean (raised),overhead (mean),"
-      "median (orig),median (raised),overhead (median),stddev (orig),stddev (raised)")
+print("benchmark,iterations,clang flags,min (orig),min (raised),max (orig),max (raised),mean (orig),mean (raised),"
+      "overhead (mean),median (orig),median (raised),overhead (median),stddev (orig),stddev (raised)")
 print(filename_without_ext, *additional_args, sep=" ", end=",")
 print(iterations, end=",")
+print(sys.argv[2], end=",")
 print(min(orig_times), end=",")
 print(min(recompiled_times), end=",")
 print(max(orig_times), end=",")

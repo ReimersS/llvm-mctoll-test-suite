@@ -25,6 +25,7 @@
  */
 
 #include <fcntl.h>
+#include <pthread.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,6 +44,15 @@
 #define BITS_PER_PIXEL_POS 28
 
 int swap; // to indicate if we need to swap byte order of header information
+
+typedef struct {
+  unsigned char *data;
+  long data_pos;
+  long data_len;
+  int red[256];
+  int green[256];
+  int blue[256];
+} thread_arg_t;
 
 /* test_endianess
  *
@@ -77,16 +87,65 @@ void swap_bytes(char *bytes, int num_bytes) {
   }
 }
 
+/* calc_hist
+ * Function that computes the histogram for the region
+ * assigned to each thread
+ */
+void *calc_hist(void *arg) {
+
+  int *red;
+  int *green;
+  int *blue;
+  int i;
+  thread_arg_t *thread_arg = (thread_arg_t *) arg;
+  unsigned char *val;
+  /*
+  red = (int *)calloc(256, sizeof(int));
+  green = (int *)calloc(256, sizeof(int));
+  blue = (int *)calloc(256, sizeof(int));
+  */
+  red = thread_arg->red;
+  green = thread_arg->green;
+  blue = thread_arg->blue;
+
+  // printf("Starting at %ld, doing %ld bytes\n", thread_arg->data_pos,
+  // thread_arg->data_len);
+  for (i = thread_arg->data_pos;
+       i < thread_arg->data_pos + thread_arg->data_len; i += 3) {
+
+    val = &(thread_arg->data[i]);
+    blue[*val]++;
+
+    val = &(thread_arg->data[i + 1]);
+    green[*val]++;
+
+    val = &(thread_arg->data[i + 2]);
+    red[*val]++;
+  }
+  /*
+  thread_arg->red = red;
+  thread_arg->green = green;
+  thread_arg->blue = blue;
+  */
+  return (void *) 0;
+}
+
 int main(int argc, char *argv[]) {
 
-  int i;
+  int i, j;
   int fd;
   char *fdata;
   struct stat finfo;
   char *fname;
+  pthread_t *pid;
+  pthread_attr_t attr;
+  thread_arg_t *arg;
   int red[256];
   int green[256];
   int blue[256];
+  int num_procs;
+  int num_per_thread;
+  int excess;
 
   // Make sure a filename is specified
   if (argv[1] == NULL) {
@@ -128,24 +187,56 @@ int main(int argc, char *argv[]) {
   }
 
   int imgdata_bytes = (int) finfo.st_size - (int) (*(data_pos));
+  int num_pixels = ((int) finfo.st_size - (int) (*(data_pos))) / 3;
   printf("This file has %d bytes of image data, %d pixels\n", imgdata_bytes,
-         imgdata_bytes / 3);
+         num_pixels);
 
-  printf("Starting sequential histogram\n");
+  printf("Starting pthreads histogram\n");
 
   memset(&(red[0]), 0, sizeof(int) * 256);
   memset(&(green[0]), 0, sizeof(int) * 256);
   memset(&(blue[0]), 0, sizeof(int) * 256);
 
-  for (i = *data_pos; i < finfo.st_size; i += 3) {
-    unsigned char *val = (unsigned char *) &(fdata[i]);
-    blue[*val]++;
+  /* Set a global scope */
+  pthread_attr_init(&attr);
+  pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 
-    val = (unsigned char *) &(fdata[i + 1]);
-    green[*val]++;
+  CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  num_per_thread = num_pixels / num_procs;
+  excess = num_pixels % num_procs;
 
-    val = (unsigned char *) &(fdata[i + 2]);
-    red[*val]++;
+  CHECK_ERROR((pid = (pthread_t *) malloc(sizeof(pthread_t) * num_procs)) ==
+              NULL);
+  CHECK_ERROR((arg = (thread_arg_t *) calloc(sizeof(thread_arg_t), num_procs)) ==
+              NULL);
+
+  /* Assign portions of the image to each thread */
+  long curr_pos = (long) (*data_pos);
+  for (i = 0; i < num_procs; i++) {
+    arg[i].data = (unsigned char *) fdata;
+    arg[i].data_pos = curr_pos;
+    arg[i].data_len = num_per_thread;
+    if (excess > 0) {
+      arg[i].data_len++;
+      excess--;
+    }
+
+    arg[i].data_len *= 3; // 3 bytes per pixel
+    curr_pos += arg[i].data_len;
+
+    pthread_create(&(pid[i]), &attr, calc_hist, (void *) (&(arg[i])));
+  }
+
+  for (i = 0; i < num_procs; i++) {
+    pthread_join(pid[i], NULL);
+  }
+
+  for (i = 0; i < num_procs; i++) {
+    for (j = 0; j < 256; j++) {
+      red[j] += arg[i].red[j];
+      green[j] += arg[i].green[j];
+      blue[j] += arg[i].blue[j];
+    }
   }
 
   printf("\n\nBlue\n");
@@ -168,6 +259,15 @@ int main(int argc, char *argv[]) {
 
   CHECK_ERROR(munmap(fdata, finfo.st_size + 1) < 0);
   CHECK_ERROR(close(fd) < 0);
+
+  free(pid);
+//  for (i = 0; i < num_procs; i++) {
+//    free(arg[i].red);
+//    free(arg[i].green);
+//    free(arg[i].blue);
+//  }
+//  free(arg);
+  pthread_attr_destroy(&attr);
 
   return 0;
 }
