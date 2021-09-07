@@ -17,6 +17,9 @@
 ./benchmark.py "string_match/string_match-seq.c"            "-O3 -mno-sse"  "250"   "string_match/inputs/key_file_50MB.txt"
 ./benchmark.py "string_match/string_match-seq.c"            "-O3 -mno-sse"  "100"   "string_match/inputs/key_file_100MB.txt"
 ./benchmark.py "string_match/string_match-seq.c"            "-O3 -mno-sse"  "25"    "string_match/inputs/key_file_500MB.txt"
+./benchmark.py "word_count/word_count-seq.c"                "-O3 -mno-sse"  "250"   "string_match/inputs/key_file_10MB.txt"
+./benchmark.py "word_count/word_count-seq.c"                "-O3 -mno-sse"  "100"   "string_match/inputs/key_file_50MB.txt"
+./benchmark.py "word_count/word_count-seq.c"                "-O3 -mno-sse"  "25"    "string_match/inputs/key_file_100MB.txt"
 
 # Arguments:    benchmark                                       clang flags     iter    benchmark flags
 ./benchmark.py "histogram/histogram-pthread.c"                  "-O3"           "100"   "histogram/inputs/small.bmp"
@@ -28,9 +31,9 @@
 #./benchmark.py "linear_regression/linear_regression-pthread.c"  "-O3"           "100"   "linear_regression/inputs/key_file_100MB.txt"
 #./benchmark.py "linear_regression/linear_regression-pthread.c"  "-O3"           "50"    "linear_regression/inputs/key_file_500MB.txt"
 # matrix_multiply:  Use still stuck around after Def is destroyed
-#./benchmark.py "matrix_multiply/matrix_multiply-pthread.c"      "-O3 -mno-sse"  "150"   "100" "1"
-#./benchmark.py "matrix_multiply/matrix_multiply-pthread.c"      "-O3 -mno-sse"  "100"   "500" "1"
-#./benchmark.py "matrix_multiply/matrix_multiply-pthread.c"      "-O3 -mno-sse"  "25"    "1000" "1"
+./benchmark.py "matrix_multiply/matrix_multiply-pthread.c"      "-O3"           "150"   "100" "1"
+./benchmark.py "matrix_multiply/matrix_multiply-pthread.c"      "-O3"           "100"   "500" "1"
+./benchmark.py "matrix_multiply/matrix_multiply-pthread.c"      "-O3"           "25"    "1000" "1"
 # pca: segfaults
 #./benchmark.py "pca/pca-pthread.c"                              "-O3 -mno-sse"  "1000"  "-r 100 -c 100 -s 1000"
 #./benchmark.py "pca/pca-pthread.c"                              "-O3 -mno-sse"  "500"   "-r 200 -c 200 -s 1000"
@@ -38,3 +41,6 @@
 ./benchmark.py "string_match/string_match-pthread.c"            "-O3 -mno-sse"  "250"   "string_match/inputs/key_file_50MB.txt"
 ./benchmark.py "string_match/string_match-pthread.c"            "-O3 -mno-sse"  "100"   "string_match/inputs/key_file_100MB.txt"
 ./benchmark.py "string_match/string_match-pthread.c"            "-O3 -mno-sse"  "25"    "string_match/inputs/key_file_500MB.txt"
+./benchmark.py "word_count/word_count-pthread.c"                "-O3 -mno-sse"  "250"   "string_match/inputs/key_file_10MB.txt"
+./benchmark.py "word_count/word_count-pthread.c"                "-O3 -mno-sse"  "100"   "string_match/inputs/key_file_50MB.txt"
+./benchmark.py "word_count/word_count-pthread.c"                "-O3 -mno-sse"  "25"    "string_match/inputs/key_file_100MB.txt"

@@ -20,3 +20,6 @@ pca/*
 string_match/*
 !string_match/*.c
 !string_match/*.test
+word_count/*
+!word_count/*.c
+!word_count/*.test
