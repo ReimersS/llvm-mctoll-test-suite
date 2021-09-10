@@ -63,6 +63,11 @@ print("Re-compiling...", file=sys.stderr)
 orig_times = []
 recompiled_times = []
 
+# running warm-up
+print("Warming up...", file=sys.stderr)
+run_command([filename_without_ext, *additional_args])
+run_command([raised_recompiled, *additional_args])
+
 for i in range(iterations):
     print(".", end="", file=sys.stderr, flush=True)
     begin = datetime.datetime.now()
