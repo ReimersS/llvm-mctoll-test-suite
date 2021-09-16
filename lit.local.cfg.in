@@ -1,0 +1,1 @@
+config.substitutions.append(('%llvm_lib_dir', path(r"@LLVM_LIBS_DIR@")))
