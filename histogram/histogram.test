@@ -9,10 +9,10 @@
 // CHECK-NEXT: Starting sequential histogram
 
 
-// CHECK-NEXT: Blue
+// CHECK: Blue
 // CHECK-NEXT: ----------
 
-// CHECK-NEXT: 0 - 0
+// CHECK: 0 - 0
 // CHECK-NEXT: 1 - 0
 // CHECK-NEXT: 2 - 0
 // CHECK-NEXT: 3 - 0
@@ -270,10 +270,10 @@
 // CHECK-NEXT: 255 - 1649805
 
 
-// CHECK-NEXT: Green
+// CHECK: Green
 // CHECK-NEXT: ----------
 
-// CHECK-NEXT: 0 - 0
+// CHECK: 0 - 0
 // CHECK-NEXT: 1 - 0
 // CHECK-NEXT: 2 - 0
 // CHECK-NEXT: 3 - 0
@@ -531,10 +531,10 @@
 // CHECK-NEXT: 255 - 4988
 
 
-// CHECK-NEXT: Red
+// CHECK: Red
 // CHECK-NEXT: ----------
 
-// CHECK-NEXT: 0 - 0
+// CHECK: 0 - 0
 // CHECK-NEXT: 1 - 0
 // CHECK-NEXT: 2 - 0
 // CHECK-NEXT: 3 - 0

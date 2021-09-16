@@ -12,10 +12,9 @@
 // CHECK-NEXT: Generating means
 
 
-// CHECK-NEXT: Starting iterative algorithm
-// CHECK-NEXT: ..................................................................................................
+// CHECK: Starting iterative algorithm
 
-// CHECK-NEXT: Final Means:
+// CHECK: Final Means:
 // CHECK-NEXT:   901   868   676
 // CHECK-NEXT:   295   911   840
 // CHECK-NEXT:   510   905   348
