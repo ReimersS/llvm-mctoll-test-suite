@@ -80,12 +80,6 @@ void matrixmult_splitter(void *data_in) {
   mm_data_t *data = (mm_data_t *) data_in;
 
   /* Check whether the various terms exist */
-  assert(data_in);
-  assert(data->matrix_len >= 0);
-  assert(data->matrix_A);
-  assert(data->matrix_B);
-  assert(data->output);
-  return;
 
   CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
   printf("THe number of processors is %d\n", num_procs);
@@ -167,7 +161,7 @@ void *matrixmult_map(void *args_in) {
 int main(int argc, char *argv[]) {
 
   int i, j, create_files;
-  int fd_A, fd_B, fd_out, file_size;
+  int fd_A, fd_B, file_size;
   char *fdata_A, *fdata_B;
   int matrix_len;
   struct stat finfo_A, finfo_B;
@@ -179,28 +173,22 @@ int main(int argc, char *argv[]) {
   srand((unsigned) time(NULL));
 
   // Make sure a filename is specified
-  if (argv[1] == NULL) {
-    printf("USAGE: %s [side of matrix] [size of Row block]\n", argv[0]);
+  if (argc < 4) {
+    printf("USAGE: %s matrix_size matrix_a_file matrix_b_file\n", argv[0]);
     exit(1);
   }
 
-  fname_A = "matrix_file_A.txt";
-  fname_B = "matrix_file_B.txt";
-  fname_out = "matrix_file_out_pthreads.txt";
+  fname_A = argv[2];
+  fname_B = argv[3];
   CHECK_ERROR ((matrix_len = atoi(argv[1])) < 0);
   file_size = ((matrix_len * matrix_len)) * sizeof(int);
 
   fprintf(stderr, "***** file size is %d\n", file_size);
 
-  if (argv[2] != NULL)
-    create_files = 1;
-  else
-    create_files = 0;
+  create_files = argc > 4;
 
   printf("MatrixMult_pthreads: Side of the matrix is %d\n", matrix_len);
   printf("MatrixMult_pthreads: Running...\n");
-
-  CHECK_ERROR((fd_out = open(fname_out, O_CREAT | O_RDWR, S_IRWXU)) < 0);
 
   /* If the matrix files do not exist, create them */
   if (create_files) {
@@ -257,7 +245,7 @@ int main(int argc, char *argv[]) {
   mm_data.matrix_B = NULL;
   mm_data.row_num = 0;
 
-  mm_data.output = (int *) malloc(matrix_len * matrix_len * sizeof(int));
+  mm_data.output = (int *) calloc(sizeof(int), matrix_len * matrix_len);
 
   mm_data.matrix_A = matrix_A_ptr = ((int *) fdata_A);
   mm_data.matrix_B = matrix_B_ptr = ((int *) fdata_B);
@@ -292,8 +280,6 @@ int main(int argc, char *argv[]) {
 
   CHECK_ERROR(munmap(fdata_B, file_size + 1) < 0);
   CHECK_ERROR(close(fd_B) < 0);
-
-  CHECK_ERROR(close(fd_out) < 0);
 
   return 0;
 }

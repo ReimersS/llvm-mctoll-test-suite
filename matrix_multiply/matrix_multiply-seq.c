@@ -95,8 +95,8 @@ void matrix_mult(mm_data_t *data_in) {
 
 int main(int argc, char *argv[]) {
   int i, j;
-  int fd_A, fd_B, fd_out, create_files;
-  char *fdata_A, *fdata_B, *fdata_out;
+  int fd_A, fd_B, create_files;
+  char *fdata_A, *fdata_B;
   int matrix_len, file_size;
   struct stat finfo_A, finfo_B;
   char *fname_A, *fname_B, *fname_out;
@@ -104,19 +104,15 @@ int main(int argc, char *argv[]) {
   srand((unsigned) time(NULL));
 
   // Make sure a filename is specified
-  if (argv[1] == NULL) {
-    printf("USAGE: %s [side of matrix]\n", argv[0]);
+  if (argc < 4) {
+    printf("USAGE: %s matrix_size matrix_a_file matrix_b_file [create_files]\n", argv[0]);
     exit(1);
   }
 
-  if (argv[2] != NULL)
-    create_files = 1;
-  else
-    create_files = 0;
+  create_files = argc > 4;
 
-  fname_A = "matrix_file_A.txt";
-  fname_B = "matrix_file_B.txt";
-  fname_out = "matrix_file_out_serial.txt";
+  fname_A = argv[2];
+  fname_B = argv[3];
   CHECK_ERROR((matrix_len = atoi(argv[1])) < 0);
   file_size = ((matrix_len * matrix_len)) * sizeof(int);
 
@@ -172,26 +168,17 @@ int main(int argc, char *argv[]) {
   CHECK_ERROR((fdata_B = mmap(0, file_size + 1, PROT_READ | PROT_WRITE,
                               MAP_PRIVATE, fd_B, 0)) == NULL);
 
-  // Create File
-  CHECK_ERROR((fd_out = open(fname_out, O_CREAT | O_RDWR, S_IRWXU)) < 0);
-  // Resize
-  CHECK_ERROR(ftruncate(fd_out, file_size) < 0);
-  // Memory Map
-  CHECK_ERROR((fdata_out = mmap(0, file_size + 1, PROT_READ | PROT_WRITE,
-                                MAP_PRIVATE, fd_out, 0)) == NULL);
-
   // Setup splitter args
   mm_data_t mm_data;
   mm_data.matrix_len = matrix_len;
   mm_data.matrix_A = ((int *) fdata_A);
   mm_data.matrix_B = ((int *) fdata_B);
-  mm_data.matrix_out = ((int *) fdata_out);
+  mm_data.matrix_out = calloc(sizeof(int), matrix_len * matrix_len);
 
   printf("MatrixMult: Calling Serial Matrix Multiplication\n");
 
   // gettimeofday(&starttime,0);
 
-  memset(mm_data.matrix_out, 0, file_size);
   matrix_mult(&mm_data);
 
   // printf("MatrixMult: Multiply Completed time = %ld\n", (endtime.tv_sec -
@@ -202,8 +189,6 @@ int main(int argc, char *argv[]) {
 
   CHECK_ERROR(munmap(fdata_B, file_size + 1) < 0);
   CHECK_ERROR(close(fd_B) < 0);
-
-  CHECK_ERROR(close(fd_out) < 0);
 
   return 0;
 }

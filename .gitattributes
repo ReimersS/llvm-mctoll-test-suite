@@ -2,3 +2,5 @@ histogram/inputs/small.bmp filter=lfs diff=lfs merge=lfs -text
 linear_regression/inputs/key_file_50MB.txt filter=lfs diff=lfs merge=lfs -text
 string_match/inputs/key_file_50MB.txt filter=lfs diff=lfs merge=lfs -text
 word_count/inputs/word_10MB.txt filter=lfs diff=lfs merge=lfs -text
+matrix_multiply/inputs/matrix_a filter=lfs diff=lfs merge=lfs -text
+matrix_multiply/inputs/matrix_b filter=lfs diff=lfs merge=lfs -text

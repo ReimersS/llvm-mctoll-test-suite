@@ -16,6 +16,10 @@ linear_regression/*
 matrix_multiply/*
 !matrix_multiply/*.c
 !matrix_multiply/*.test
+!matrix_multiply/inputs/
+matrix_multiply/inputs/*
+!matrix_multiply/inputs/matrix_a
+!matrix_multiply/inputs/matrix_b
 pca/*
 !pca/*.c
 !pca/*.test
