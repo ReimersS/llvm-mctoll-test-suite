@@ -27,3 +27,4 @@ word_count/*
 !word_count/*.c
 !word_count/*.test
 !word_count/inputs/word_10MB.txt
+*.csv
