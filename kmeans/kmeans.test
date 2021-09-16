@@ -5,115 +5,115 @@
 // RUN: %t-dis 2>&1 | FileCheck %s
 
 // CHECK: Dimension = 3
-// CHECK: Number of clusters = 100
-// CHECK: Number of points = 100000
-// CHECK: Size of each dimension = 1000
-// CHECK: Generating points
-// CHECK: Generating means
+// CHECK-NEXT: Number of clusters = 100
+// CHECK-NEXT: Number of points = 100000
+// CHECK-NEXT: Size of each dimension = 1000
+// CHECK-NEXT: Generating points
+// CHECK-NEXT: Generating means
 
 
-// CHECK: Starting iterative algorithm
-// CHECK: ..................................................................................................
+// CHECK-NEXT: Starting iterative algorithm
+// CHECK-NEXT: ..................................................................................................
 
-// CHECK: Final Means:
-// CHECK:   901   868   676
-// CHECK:   295   911   840
-// CHECK:   510   905   348
-// CHECK:   259   499   523
-// CHECK:   889   373   904
-// CHECK:   863   881    80
-// CHECK:   704   142   509
-// CHECK:    82   348   114
-// CHECK:   269   515   899
-// CHECK:   879    79   115
-// CHECK:   701   114   919
-// CHECK:   712   834   302
-// CHECK:   321   651   394
-// CHECK:   889   896   466
-// CHECK:   299   704   111
-// CHECK:   498   694   259
-// CHECK:   105   897   471
-// CHECK:   494   882   913
-// CHECK:   115   278   328
-// CHECK:   100   889   896
-// CHECK:   500   528   899
-// CHECK:   898   114   871
-// CHECK:   497   730   524
-// CHECK:   102   674   506
-// CHECK:   697   388   488
-// CHECK:   895   279   428
-// CHECK:   105   553   708
-// CHECK:   626   521   679
-// CHECK:   693   648   474
-// CHECK:   274   113   252
-// CHECK:   107   858   686
-// CHECK:   423   526    87
-// CHECK:   296    94   903
-// CHECK:   721   526   889
-// CHECK:   318   325   362
-// CHECK:   336   291   586
-// CHECK:   278   503   237
-// CHECK:   910   461   286
-// CHECK:   639   467    92
-// CHECK:   392   899   111
-// CHECK:   687   917   816
-// CHECK:   510   277   419
-// CHECK:   111   570    92
-// CHECK:    85   383   528
-// CHECK:   108   914   246
-// CHECK:   373   476   708
-// CHECK:   685   906   532
-// CHECK:   313   720   909
-// CHECK:   297   869   319
-// CHECK:   308   109   697
-// CHECK:   902    97   354
-// CHECK:   688   107   720
-// CHECK:   497    92   574
-// CHECK:   104   141   909
-// CHECK:   500   451   286
-// CHECK:   355   312   888
-// CHECK:   885   885   900
-// CHECK:   753   344   717
-// CHECK:    94   662   885
-// CHECK:   704   309   277
-// CHECK:   307    97   456
-// CHECK:   603    88    97
-// CHECK:   705    95   290
-// CHECK:   495   112   862
-// CHECK:   317   886   540
-// CHECK:    98   391   906
-// CHECK:   714   568   282
-// CHECK:   919   314   680
-// CHECK:   907   682   419
-// CHECK:   535   302   677
-// CHECK:   902   654   887
-// CHECK:   624   695    87
-// CHECK:   109   706   264
-// CHECK:   910   267   130
-// CHECK:   729   734   689
-// CHECK:   505   706   755
-// CHECK:   486   906   668
-// CHECK:    84    86   306
-// CHECK:   112   130   517
-// CHECK:   717   249    79
-// CHECK:   111   115    94
-// CHECK:   362    95    85
-// CHECK:   622   314   894
-// CHECK:   876   471    88
-// CHECK:   488   284   117
-// CHECK:   908   884   258
-// CHECK:   878   670   131
-// CHECK:   898    97   613
-// CHECK:   139   310   725
-// CHECK:   117   860    74
-// CHECK:   488   505   494
-// CHECK:   671   734   912
-// CHECK:    91   499   335
-// CHECK:   891   581   686
-// CHECK:   621   905   119
-// CHECK:   494   103   301
-// CHECK:   882   487   509
-// CHECK:   284   699   673
-// CHECK:    91    99   711
-// CHECK:   275   319   104
-// CHECK: Cleaning up
+// CHECK-NEXT: Final Means:
+// CHECK-NEXT:   901   868   676
+// CHECK-NEXT:   295   911   840
+// CHECK-NEXT:   510   905   348
+// CHECK-NEXT:   259   499   523
+// CHECK-NEXT:   889   373   904
+// CHECK-NEXT:   863   881    80
+// CHECK-NEXT:   704   142   509
+// CHECK-NEXT:    82   348   114
+// CHECK-NEXT:   269   515   899
+// CHECK-NEXT:   879    79   115
+// CHECK-NEXT:   701   114   919
+// CHECK-NEXT:   712   834   302
+// CHECK-NEXT:   321   651   394
+// CHECK-NEXT:   889   896   466
+// CHECK-NEXT:   299   704   111
+// CHECK-NEXT:   498   694   259
+// CHECK-NEXT:   105   897   471
+// CHECK-NEXT:   494   882   913
+// CHECK-NEXT:   115   278   328
+// CHECK-NEXT:   100   889   896
+// CHECK-NEXT:   500   528   899
+// CHECK-NEXT:   898   114   871
+// CHECK-NEXT:   497   730   524
+// CHECK-NEXT:   102   674   506
+// CHECK-NEXT:   697   388   488
+// CHECK-NEXT:   895   279   428
+// CHECK-NEXT:   105   553   708
+// CHECK-NEXT:   626   521   679
+// CHECK-NEXT:   693   648   474
+// CHECK-NEXT:   274   113   252
+// CHECK-NEXT:   107   858   686
+// CHECK-NEXT:   423   526    87
+// CHECK-NEXT:   296    94   903
+// CHECK-NEXT:   721   526   889
+// CHECK-NEXT:   318   325   362
+// CHECK-NEXT:   336   291   586
+// CHECK-NEXT:   278   503   237
+// CHECK-NEXT:   910   461   286
+// CHECK-NEXT:   639   467    92
+// CHECK-NEXT:   392   899   111
+// CHECK-NEXT:   687   917   816
+// CHECK-NEXT:   510   277   419
+// CHECK-NEXT:   111   570    92
+// CHECK-NEXT:    85   383   528
+// CHECK-NEXT:   108   914   246
+// CHECK-NEXT:   373   476   708
+// CHECK-NEXT:   685   906   532
+// CHECK-NEXT:   313   720   909
+// CHECK-NEXT:   297   869   319
+// CHECK-NEXT:   308   109   697
+// CHECK-NEXT:   902    97   354
+// CHECK-NEXT:   688   107   720
+// CHECK-NEXT:   497    92   574
+// CHECK-NEXT:   104   141   909
+// CHECK-NEXT:   500   451   286
+// CHECK-NEXT:   355   312   888
+// CHECK-NEXT:   885   885   900
+// CHECK-NEXT:   753   344   717
+// CHECK-NEXT:    94   662   885
+// CHECK-NEXT:   704   309   277
+// CHECK-NEXT:   307    97   456
+// CHECK-NEXT:   603    88    97
+// CHECK-NEXT:   705    95   290
+// CHECK-NEXT:   495   112   862
+// CHECK-NEXT:   317   886   540
+// CHECK-NEXT:    98   391   906
+// CHECK-NEXT:   714   568   282
+// CHECK-NEXT:   919   314   680
+// CHECK-NEXT:   907   682   419
+// CHECK-NEXT:   535   302   677
+// CHECK-NEXT:   902   654   887
+// CHECK-NEXT:   624   695    87
+// CHECK-NEXT:   109   706   264
+// CHECK-NEXT:   910   267   130
+// CHECK-NEXT:   729   734   689
+// CHECK-NEXT:   505   706   755
+// CHECK-NEXT:   486   906   668
+// CHECK-NEXT:    84    86   306
+// CHECK-NEXT:   112   130   517
+// CHECK-NEXT:   717   249    79
+// CHECK-NEXT:   111   115    94
+// CHECK-NEXT:   362    95    85
+// CHECK-NEXT:   622   314   894
+// CHECK-NEXT:   876   471    88
+// CHECK-NEXT:   488   284   117
+// CHECK-NEXT:   908   884   258
+// CHECK-NEXT:   878   670   131
+// CHECK-NEXT:   898    97   613
+// CHECK-NEXT:   139   310   725
+// CHECK-NEXT:   117   860    74
+// CHECK-NEXT:   488   505   494
+// CHECK-NEXT:   671   734   912
+// CHECK-NEXT:    91   499   335
+// CHECK-NEXT:   891   581   686
+// CHECK-NEXT:   621   905   119
+// CHECK-NEXT:   494   103   301
+// CHECK-NEXT:   882   487   509
+// CHECK-NEXT:   284   699   673
+// CHECK-NEXT:    91    99   711
+// CHECK-NEXT:   275   319   104
+// CHECK-NEXT: Cleaning up
