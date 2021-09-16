@@ -5,12 +5,14 @@ cmake-build-debug
 histogram/*
 !histogram/*.c
 !histogram/*.test
+!histogram/inputs/small.bmp
 kmeans/*
 !kmeans/*.c
 !kmeans/*.test
 linear_regression/*
 !linear_regression/*.c
 !linear_regression/*.test
+!linear_regression/inputs/key_file_50MB.txt
 matrix_multiply/*
 !matrix_multiply/*.c
 !matrix_multiply/*.test
@@ -20,6 +22,8 @@ pca/*
 string_match/*
 !string_match/*.c
 !string_match/*.test
+!string_match/inputs/key_file_50MB.txt
 word_count/*
 !word_count/*.c
 !word_count/*.test
+!word_count/inputs/word_10MB.txt
