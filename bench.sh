@@ -17,9 +17,7 @@ set -euo pipefail
 ./benchmark.py "string_match/string_match-seq.c"            "-O3 -mno-sse"  "250"   "string_match/inputs/key_file_50MB.txt"
 ./benchmark.py "string_match/string_match-seq.c"            "-O3 -mno-sse"  "100"   "string_match/inputs/key_file_100MB.txt"
 ./benchmark.py "string_match/string_match-seq.c"            "-O3 -mno-sse"  "25"    "string_match/inputs/key_file_500MB.txt"
-./benchmark.py "word_count/word_count-seq.c"                "-O3"           "250"   "word_count/inputs/key_file_10MB.txt"
-./benchmark.py "word_count/word_count-seq.c"                "-O3"           "100"   "word_count/inputs/key_file_50MB.txt"
-./benchmark.py "word_count/word_count-seq.c"                "-O3"           "25"    "word_count/inputs/key_file_100MB.txt"
+./benchmark.py "word_count/word_count-seq.c"                "-O3"           "250"   "word_count/inputs/word_10MB.txt"
 
 # Arguments:    benchmark                                       clang flags     iter    benchmark flags
 ./benchmark.py "histogram/histogram-pthread.c"                  "-O3"           "100"   "histogram/inputs/small.bmp"
@@ -39,6 +37,4 @@ set -euo pipefail
 ./benchmark.py "string_match/string_match-pthread.c"            "-O3"           "250"   "string_match/inputs/key_file_50MB.txt"
 ./benchmark.py "string_match/string_match-pthread.c"            "-O3"           "100"   "string_match/inputs/key_file_100MB.txt"
 ./benchmark.py "string_match/string_match-pthread.c"            "-O3"           "25"    "string_match/inputs/key_file_500MB.txt"
-./benchmark.py "word_count/word_count-pthread.c"                "-O3"           "250"   "word_count/inputs/key_file_10MB.txt"
-./benchmark.py "word_count/word_count-pthread.c"                "-O3"           "100"   "word_count/inputs/key_file_50MB.txt"
-./benchmark.py "word_count/word_count-pthread.c"                "-O3"           "25"    "word_count/inputs/key_file_100MB.txt"
+./benchmark.py "word_count/word_count-pthread.c"                "-O3"           "250"   "word_count/inputs/word_10MB.txt"
