@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # Arguments:    benchmark                                   clang flags     iter    benchmark flags
 ./benchmark.py "histogram/histogram-seq.c"                  "-O3"           "100"   "histogram/inputs/small.bmp"
 ./benchmark.py "histogram/histogram-seq.c"                  "-O3"           "50"    "histogram/inputs/med.bmp"

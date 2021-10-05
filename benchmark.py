@@ -6,20 +6,20 @@ import statistics
 import subprocess
 import sys
 
-include_files = "/usr/include/assert.h" \
-                "/usr/include/crypt.h" \
-                "/usr/include/ctype.h" \
-                "/usr/include/fcntl.h" \
+include_files = "/usr/include/assert.h," \
+                "/usr/include/crypt.h," \
+                "/usr/include/ctype.h," \
+                "/usr/include/fcntl.h," \
                 "/usr/include/getopt.h," \
-                "/usr/include/inttypes.h" \
-                "/usr/include/math.h" \
-                "/usr/include/pthread.h" \
-                "/usr/include/stdio.h" \
-                "/usr/include/stdlib.h" \
-                "/usr/include/string.h" \
-                "/usr/include/strings.h" \
-                "/usr/include/time.h" \
-                "/usr/include/unistd.h" \
+                "/usr/include/inttypes.h," \
+                "/usr/include/math.h," \
+                "/usr/include/pthread.h," \
+                "/usr/include/stdio.h," \
+                "/usr/include/stdlib.h," \
+                "/usr/include/string.h," \
+                "/usr/include/strings.h," \
+                "/usr/include/time.h," \
+                "/usr/include/unistd.h," \
                 "/usr/include/x86_64-linux-gnu/sys/mman.h," \
                 "/usr/include/x86_64-linux-gnu/sys/stat.h," \
                 "/usr/include/x86_64-linux-gnu/sys/time.h," \
