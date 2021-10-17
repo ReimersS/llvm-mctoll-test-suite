@@ -1,5 +1,5 @@
 // REQUIRES: system-linux
-// RUN: clang -o %t %S/word_count-seq.c -O3
+// RUN: clang -o %t %S/seq.c -O3
 // RUN: llvm-mctoll -d --include-files=%S/../getopt.h,/usr/include/assert.h,/usr/include/fcntl.h,/usr/include/inttypes.h,%llvm_lib_dir/clang/14.0.0/include/stddef.h,/usr/include/stdio.h,/usr/include/stdlib.h,/usr/include/string.h,/usr/include/x86_64-linux-gnu/sys/mman.h,/usr/include/x86_64-linux-gnu/sys/stat.h,/usr/include/x86_64-linux-gnu/sys/time.h,/usr/include/time.h,/usr/include/unistd.h,/usr/include/ctype.h %t
 // RUN: clang -O3 -o %t-dis %t-dis.ll
 // RUN: %t-dis %S/inputs/word_10MB.txt 2>&1 | FileCheck %s

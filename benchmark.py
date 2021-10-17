@@ -6,25 +6,6 @@ import statistics
 import subprocess
 import sys
 
-include_files = "/usr/include/assert.h," \
-                "/usr/include/crypt.h," \
-                "/usr/include/ctype.h," \
-                "/usr/include/fcntl.h," \
-                "/usr/include/getopt.h," \
-                "/usr/include/inttypes.h," \
-                "/usr/include/math.h," \
-                "/usr/include/pthread.h," \
-                "/usr/include/stdio.h," \
-                "/usr/include/stdlib.h," \
-                "/usr/include/string.h," \
-                "/usr/include/strings.h," \
-                "/usr/include/time.h," \
-                "/usr/include/unistd.h," \
-                "/usr/include/x86_64-linux-gnu/sys/mman.h," \
-                "/usr/include/x86_64-linux-gnu/sys/stat.h," \
-                "/usr/include/x86_64-linux-gnu/sys/time.h," \
-                "/home/martin/llvm-project/build/lib/clang/14.0.0/include/stddef.h," \
-                "./getopt.h"
 
 def run_command(args):
     result = subprocess.run(args, capture_output=True)
@@ -35,59 +16,43 @@ def run_command(args):
         exit(1)
 
 
-if len(sys.argv) <= 3:
-    print("Usage: {} file \"compile_flags\" iterations [arguments]".format(sys.argv[0]), file=sys.stderr)
+if len(sys.argv) <= 2:
+    print("Usage: {} file iterations [arguments]".format(sys.argv[0]), file=sys.stderr)
     sys.exit(1)
 
-input_file = sys.argv[1]
-compilation_flags = sys.argv[2].split()
-iterations = int(sys.argv[3])
-additional_args = sys.argv[4:]
+native_binary = sys.argv[1]
+iterations = int(sys.argv[2])
+additional_args = sys.argv[3:]
 
-filename_without_ext = re.sub(r"(.c)$", "", input_file)
-raised_bitcode = filename_without_ext + "-dis.ll"
-raised_recompiled = filename_without_ext + "-dis"
-
-# compiling benchmark
-print("Compiling...", file=sys.stderr)
-run_command(["clang", *compilation_flags, input_file, "-o", filename_without_ext])
-
-# raising benchmark
-run_command(["llvm-mctoll", "--compilation-db-path=.", "--include-files=" + include_files, "-d", filename_without_ext, "-o", raised_bitcode])
-print("Raising...", file=sys.stderr)
-
-# re-compiling benchmark
-run_command(["clang", *compilation_flags, raised_bitcode, "-o", raised_recompiled])
-print("Re-compiling...", file=sys.stderr)
+basename = re.sub(r"(.out)$", "", native_binary)
+raised_binary = basename + ".rt"
 
 orig_times = []
 recompiled_times = []
 
 # running warm-up
 print("Warming up...", file=sys.stderr)
-run_command([filename_without_ext, *additional_args])
-run_command([raised_recompiled, *additional_args])
+run_command([native_binary, *additional_args])
+run_command([raised_binary, *additional_args])
 
 for i in range(iterations):
     print(".", end="", file=sys.stderr, flush=True)
     begin = datetime.datetime.now()
-    run_command([filename_without_ext, *additional_args])
+    run_command([native_binary, *additional_args])
     end = datetime.datetime.now()
     diff = end - begin
     orig_times.append(diff.total_seconds() * 10**6)
 
     print(".", end="", file=sys.stderr, flush=True)
     begin = datetime.datetime.now()
-    run_command([raised_recompiled, *additional_args])
+    run_command([raised_binary, *additional_args])
     end = datetime.datetime.now()
     diff = end - begin
     recompiled_times.append(diff.total_seconds() * 10 ** 6)
 
 print("", file=sys.stderr, flush=True)
 
-print("benchmark,iterations,clang flags,min (orig),min (raised),max (orig),max (raised),mean (orig),mean (raised),"
-      "overhead (mean),median (orig),median (raised),overhead (median),stddev (orig),stddev (raised)")
-print(filename_without_ext, *additional_args, sep=" ", end=",")
+print(basename, *additional_args, sep=" ", end=",")
 print(iterations, end=",")
 print(sys.argv[2], end=",")
 print(min(orig_times), end=",")
