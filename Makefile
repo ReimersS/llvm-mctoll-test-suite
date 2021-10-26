@@ -1,6 +1,6 @@
 -include Makefile.config
 
-.PHONY: clean package-x86
+.PHONY: clean build mctoll recompile-x86 recompile-arm package-x86 package-arm
 
 all: build mctoll package-x86 package-arm
 
