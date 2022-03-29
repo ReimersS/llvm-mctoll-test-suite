@@ -22,18 +22,9 @@ recompile-arm: mctoll
 clean:
 	@set -e; for t in $(TARGETS); do make -C $$t clean; done
 
-package-x86: build recompile-x86
-	@test -e build || mkdir build
-	@rm -rf build/x86
-	@mkdir build/x86
-	@for t in $(TARGETS); do mkdir build/x86/`basename $$t`; cp -r  $$t/{inputs,build/*-x86.{out,rt}} build/x86/`basename $$t`/; done
-	@cp benchmark.py run-all.sh build/
-
-package-arm: build recompile-arm
-	@test -e build || mkdir build
-	@rm -rf build/arm
-	@mkdir build/arm
-	@for t in $(TARGETS); do mkdir build/arm/`basename $$t`; cp -r  $$t/{inputs,build/*-arm.{out,rt}} build/arm/`basename $$t`/; done
+package:
+	@rm -rf build
+	@for t in $(TARGETS); do mkdir -p build/benchmarks/`basename $$t`; cp -r  $$t/inputs $$t/build build/benchmarks/`basename $$t`/; done
 	@cp benchmark.py run-all.sh build/
 
 
