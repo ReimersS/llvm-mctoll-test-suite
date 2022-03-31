@@ -30,13 +30,13 @@ binary_opt = basename + "-opt.rt"
 binary_popt = basename + "-popt.rt"
 binary_ppopt = basename + "-ppopt.rt"
 
-# times_native = []
+times_native = []
 times_unopt = []
 times_opt = []
 times_popt = []
 times_ppopt = []
 
-for (binary, array) in [(binary_unopt, times_unopt), (binary_opt, times_opt), (binary_popt, times_popt),
+for (binary, array) in [(native_binary, times_native), (binary_unopt, times_unopt), (binary_opt, times_opt), (binary_popt, times_popt),
                         (binary_ppopt, times_ppopt)]:
     for i in range(iterations):
         print(".", end="", file=sys.stderr, flush=True)
@@ -50,6 +50,8 @@ print("", file=sys.stderr, flush=True)
 
 print(basename, *additional_args, sep=" ", end=",")
 print(iterations, end=",")
+print(statistics.mean(times_native), end=",")
+print(statistics.stdev(times_native), end=",")
 print(statistics.mean(times_unopt), end=",")
 print(statistics.stdev(times_unopt), end=",")
 print(statistics.mean(times_opt), end=",")
