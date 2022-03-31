@@ -6,7 +6,7 @@ mctoll: build/seq-unopt.ll build/pthread-unopt.ll build/seq-popt.ll build/pthrea
 
 recompile-x86: build/seq-x86.rt build/pthread-x86.rt
 
-recompile-arm: build/seq-arm.rt build/pthread-arm.rt
+recompile-arm: build/seq-unopt-arm.rt build/pthread-unopt-arm.rt build/seq-opt-arm.rt build/pthread-opt-arm.rt build/seq-popt-arm.rt build/pthread-popt-arm.rt build/seq-ppopt-arm.rt build/pthread-ppopt-arm.rt
 
 out:
 	@test -d build || mkdir build
