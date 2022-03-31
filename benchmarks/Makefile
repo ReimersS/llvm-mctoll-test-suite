@@ -29,13 +29,13 @@ build/%-ppopt.ll: build/%-x86.out
 build/%-unopt-arm.rt: build/%-unopt.ll
 	$(CC_ARM) $(CFLAGS) -O0 -o $@ $<
 
-build/%-opt-arm.rt: build/%.ll
+build/%-opt-arm.rt: build/%-unopt.ll
 	$(CC_ARM) $(CFLAGS) $(RETARGET_OPT_FLAGS) -o $@ $<
 
-build/%-popt-arm.rt: build/%.ll
+build/%-popt-arm.rt: build/%-popt.ll
 	$(CC_ARM) $(CFLAGS) $(RETARGET_OPT_FLAGS) -o $@ $<
 
-build/%-ppopt-arm.rt: build/%.ll
+build/%-ppopt-arm.rt: build/%-ppopt.ll
 	$(CC_ARM) $(CFLAGS) $(RETARGET_OPT_FLAGS) -o $@ $<
 
 .PHONY: clean
