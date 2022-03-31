@@ -25,10 +25,10 @@ iterations = int(sys.argv[2])
 additional_args = sys.argv[3:]
 
 basename = re.sub(r"(.out)$", "", native_binary)
-binary_unopt = basename + ".rt"
-binary_opt = basename + ".rt"
-binary_popt = basename + ".rt"
-binary_ppopt = basename + ".rt"
+binary_unopt = basename + "-unopt.rt"
+binary_opt = basename + "-opt.rt"
+binary_popt = basename + "-popt.rt"
+binary_ppopt = basename + "-ppopt.rt"
 
 # times_native = []
 times_unopt = []
