@@ -25,45 +25,36 @@ iterations = int(sys.argv[2])
 additional_args = sys.argv[3:]
 
 basename = re.sub(r"(.out)$", "", native_binary)
-raised_binary = basename + ".rt"
+binary_unopt = basename + ".rt"
+binary_opt = basename + ".rt"
+binary_popt = basename + ".rt"
+binary_ppopt = basename + ".rt"
 
-orig_times = []
-recompiled_times = []
+# times_native = []
+times_unopt = []
+times_opt = []
+times_popt = []
+times_ppopt = []
 
-# running warm-up
-print("Warming up...", file=sys.stderr)
-run_command([native_binary, *additional_args])
-run_command([raised_binary, *additional_args])
-
-for i in range(iterations):
-    print(".", end="", file=sys.stderr, flush=True)
-    begin = datetime.datetime.now()
-    run_command([native_binary, *additional_args])
-    end = datetime.datetime.now()
-    diff = end - begin
-    orig_times.append(diff.total_seconds() * 10**6)
-
-    print(".", end="", file=sys.stderr, flush=True)
-    begin = datetime.datetime.now()
-    run_command([raised_binary, *additional_args])
-    end = datetime.datetime.now()
-    diff = end - begin
-    recompiled_times.append(diff.total_seconds() * 10 ** 6)
+for (binary, array) in [(binary_unopt, times_unopt), (binary_opt, times_opt), (binary_popt, times_popt),
+                        (binary_ppopt, times_ppopt)]:
+    for i in range(iterations):
+        print(".", end="", file=sys.stderr, flush=True)
+        begin = datetime.datetime.now()
+        run_command([binary, *additional_args])
+        end = datetime.datetime.now()
+        diff = end - begin
+        array.append(diff.total_seconds() * 10 ** 6)
 
 print("", file=sys.stderr, flush=True)
 
 print(basename, *additional_args, sep=" ", end=",")
 print(iterations, end=",")
-print(sys.argv[2], end=",")
-print(min(orig_times), end=",")
-print(min(recompiled_times), end=",")
-print(max(orig_times), end=",")
-print(max(recompiled_times), end=",")
-print(statistics.mean(orig_times), end=",")
-print(statistics.mean(recompiled_times), end=",")
-print(statistics.mean(recompiled_times) / statistics.mean(orig_times), end=",")
-print(statistics.median(orig_times), end=",")
-print(statistics.median(recompiled_times), end=",")
-print(statistics.median(recompiled_times) / statistics.median(orig_times), end=",")
-print(statistics.stdev(orig_times), end=",")
-print(statistics.stdev(recompiled_times), end="\n")
+print(statistics.mean(times_unopt), end=",")
+print(statistics.stdev(times_unopt), end=",")
+print(statistics.mean(times_opt), end=",")
+print(statistics.stdev(times_opt), end=",")
+print(statistics.mean(times_popt), end=",")
+print(statistics.stdev(times_popt), end=",")
+print(statistics.mean(times_ppopt), end=",")
+print(statistics.stdev(times_ppopt), end="\n")

@@ -2,7 +2,7 @@
 
 arch=arm
 
-echo "benchmark,iterations,clang flags,min (orig),min (raised),max (orig),max (raised),mean (orig),mean (raised),overhead (mean),median (orig),median (raised),overhead (median),stddev (orig),stddev (raised)"
+echo "benchmark,iterations,mean-native,stddev-native,mean-unopt,stddev-unopt,mean-opt,stddev-opt,mean-popt,stddev-popt,mean-ppopt,stddev-ppopt"
 
 # Arguments:    benchmark                                   iter    benchmark flags
 ./benchmark.py "benchmarks/histogram/build/seq-${arch}.out"             "100"   "benchmarks/histogram/inputs/small.bmp"
