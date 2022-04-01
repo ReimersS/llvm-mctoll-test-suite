@@ -15,6 +15,7 @@ build/%-x86.out: %.c
 	$(CC) $(CFLAGS) $(OPT_FLAGS) -o $@ $<
 
 build/%-arm.out: %.c
+	$(CC_ARM) $(CFLAGS) $(OPT_FLAGS) -S -emit-llvm -o $@-native.ll $<
 	$(CC_ARM) $(CFLAGS) $(OPT_FLAGS) -o $@ $<
 
 build/%-unopt.ll: build/%-x86.out
