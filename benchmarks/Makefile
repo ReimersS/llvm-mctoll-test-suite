@@ -22,7 +22,7 @@ build/%-unopt.ll: build/%-x86.out
 	$(MCTOLL) -disable-optimizations=true -d $< -o $@
 
 build/%-opt.ll: build/%-x86.out
-	$(MCTOLL) -optimize-fences=true -disable-optimizations=true -d $< -o $@
+	$(MCTOLL) -disable-optimizations=true -d $< -o $@
 	$(OPT) -S -o $@.opt.ll $@ -O3
 
 build/%-popt.ll: build/%-x86.out
