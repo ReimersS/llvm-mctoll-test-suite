@@ -23,15 +23,15 @@ build/%-unopt.ll: build/%-x86.out
 
 build/%-opt.ll: build/%-x86.out
 	$(MCTOLL) -disable-optimizations=true -d $< -o $@
-	$(OPT) -S -o $@.opt.ll $@ -O3
+	$(OPT) -S -o $@.opt.ll $@ $(RETARGET_OPT_BITCODE_FLAGS)
 
 build/%-popt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=true -d $< -o $@
-	$(OPT) -S -o $@.opt.ll $@ -O3
+	$(OPT) -S -o $@.opt.ll $@ $(RETARGET_OPT_BITCODE_FLAGS)
 
 build/%-ppopt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=false -d $< -o $@
-	$(OPT) -S -o $@.opt.ll $@ -O3
+	$(OPT) -S -o $@.opt.ll $@ $(RETARGET_OPT_BITCODE_FLAGS)
 
 build/%-arm-unopt.rt: build/%-unopt.ll
 	$(CC_ARM) $(CFLAGS) -O0 -o $@ $<
