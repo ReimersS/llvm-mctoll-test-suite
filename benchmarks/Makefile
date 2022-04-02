@@ -2,7 +2,7 @@
 
 build-native: out build/seq-x86.out build/pthread-x86.out build/seq-arm.out build/pthread-arm.out
 
-mctoll: build/seq-unopt.ll build/pthread-unopt.ll build/seq-popt.ll build/pthread-popt.ll build/seq-ppopt.ll build/pthread-ppopt.ll
+mctoll: build/seq-unopt.ll build/pthread-unopt.ll build/seq-opt.ll build/pthread-opt.ll build/seq-popt.ll build/pthread-popt.ll build/seq-ppopt.ll build/pthread-ppopt.ll
 
 recompile-x86: build/seq-x86.rt build/pthread-x86.rt
 
@@ -21,16 +21,22 @@ build/%-arm.out: %.c
 build/%-unopt.ll: build/%-x86.out
 	$(MCTOLL) -disable-optimizations=true -d $< -o $@
 
+build/%-opt.ll: build/%-x86.out
+	$(MCTOLL) -optimize-fences=true -disable-optimizations=true -d $< -o $@
+	$(OPT) -S -o $@ $@ $(RETARGET_OPT_FLAGS)
+
 build/%-popt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=true -d $< -o $@
+	$(OPT) -S -o $@ $@ $(RETARGET_OPT_FLAGS)
 
 build/%-ppopt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=false -d $< -o $@
+	$(OPT) -S -o $@ $@ $(RETARGET_OPT_FLAGS)
 
 build/%-arm-unopt.rt: build/%-unopt.ll
 	$(CC_ARM) $(CFLAGS) -O0 -o $@ $<
 
-build/%-arm-opt.rt: build/%-unopt.ll
+build/%-arm-opt.rt: build/%-opt.ll
 	$(CC_ARM) $(CFLAGS) $(RETARGET_OPT_FLAGS) -o $@ $<
 
 build/%-arm-popt.rt: build/%-popt.ll
