@@ -23,15 +23,15 @@ build/%-unopt.ll: build/%-x86.out
 
 build/%-opt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=true -d $< -o $@
-	$(OPT) -S -o $@ $@ -O3
+	$(OPT) -S -o $@.opt.ll $@ -O3
 
 build/%-popt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=true -d $< -o $@
-	$(OPT) -S -o $@ $@ -O3
+	$(OPT) -S -o $@.opt.ll $@ -O3
 
 build/%-ppopt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=false -d $< -o $@
-	$(OPT) -S -o $@ $@ -O3
+	$(OPT) -S -o $@.opt.ll $@ -O3
 
 build/%-arm-unopt.rt: build/%-unopt.ll
 	$(CC_ARM) $(CFLAGS) -O0 -o $@ $<
