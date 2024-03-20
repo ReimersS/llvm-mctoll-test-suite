@@ -31,7 +31,7 @@ build/%-popt.ll: build/%-x86.out
 
 build/%-ppopt.ll: build/%-x86.out
 	$(MCTOLL) -optimize-fences=true -disable-optimizations=false -d $< -o $@
-	$(OPT) -S -o $@.opt.ll $@ $(RETARGET_OPT_BITCODE_FLAGS)
+	#$(OPT) -S -o $@.opt.ll $@ $(RETARGET_OPT_BITCODE_FLAGS)
 
 build/%-arm-unopt.rt: build/%-unopt.ll
 	$(CC_ARM) $(CFLAGS) -O0 -o $@ $<
