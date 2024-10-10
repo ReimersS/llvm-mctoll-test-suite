@@ -130,7 +130,8 @@ void wordcount_splitter(void *data_in) {
   pthread_t *tid;
   int i, num_procs;
 
-  CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  //CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  num_procs = 16;
   printf("THe number of processors is %d\n\n", num_procs);
 
   wc_data_t *data = (wc_data_t *) data_in;
@@ -475,7 +476,8 @@ void sort_pthreads(void *base, size_t num_elems, size_t width,
   pthread_attr_t attr;
   pthread_t *tid;
 
-  CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  //CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  num_procs = 16;
   printf("THe number of processors is %d\n\n", num_procs);
 
   tid = (pthread_t *) malloc(num_procs * sizeof(pthread_t));

@@ -149,7 +149,8 @@ void string_match_splitter(void *data_in) {
   pthread_t *tid;
   int i, num_procs;
 
-  CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  //CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  num_procs = 16;
   printf("THe number of processors is %d\n", num_procs);
 
   str_data_t *data = (str_data_t *) data_in;

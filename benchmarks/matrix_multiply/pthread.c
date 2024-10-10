@@ -81,7 +81,8 @@ void matrixmult_splitter(void *data_in) {
 
   /* Check whether the various terms exist */
 
-  CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  //CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  num_procs = 16;
   printf("THe number of processors is %d\n", num_procs);
 
   tid = (pthread_t *) malloc(num_procs * sizeof(pthread_t));

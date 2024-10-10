@@ -114,7 +114,8 @@ int main(int argc, char *argv[]) {
   CHECK_ERROR((fdata = mmap(0, finfo.st_size + 1,
                             PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0)) == NULL);
 
-  CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  //CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  num_procs = 16;
   printf("The number of processors is %d\n\n", num_procs);
 
   pthread_attr_init(&attr);

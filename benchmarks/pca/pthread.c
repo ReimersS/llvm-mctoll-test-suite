@@ -187,7 +187,8 @@ void pthread_mean() {
   int i;
   mean_arg_t *mean_args;
 
-  CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  //CHECK_ERROR((num_procs = sysconf(_SC_NPROCESSORS_ONLN)) <= 0);
+  num_procs = 16;
   printf("The number of processors is %d\n", num_procs);
 
   tid = (pthread_t *) malloc(num_procs * sizeof(pthread_t));
